@@ -21,38 +21,40 @@ from keras import backend as K
 from keras.models import model_from_json, model_from_yaml
 
 K.set_learning_phase(0)
-FLAGS = flags.FLAGS
 
-flags.DEFINE_string('input_model', None, 'Path to the input model.')
-flags.DEFINE_string('input_model_json', None, 'Path to the input model '
-                                              'architecture in json format.')
-flags.DEFINE_string('input_model_yaml', None, 'Path to the input model '
-                                              'architecture in yaml format.')
-flags.DEFINE_string('output_model', None, 'Path where the converted model will '
-                                          'be stored.')
-flags.DEFINE_boolean('save_graph_def', False,
-                     'Whether to save the graphdef.pbtxt file which contains '
-                     'the graph definition in ASCII format.')
-flags.DEFINE_string('output_nodes_prefix', None,
-                    'If set, the output nodes will be renamed to '
-                    '`output_nodes_prefix`+i, where `i` will numerate the '
-                    'number of of output nodes of the network.')
-flags.DEFINE_boolean('quantize', False,
-                     'If set, the resultant TensorFlow graph weights will be '
-                     'converted from float into eight-bit equivalents. See '
-                     'documentation here: '
-                     'https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/graph_transforms')
-flags.DEFINE_boolean('channels_first', False,
-                     'Whether channels are the first dimension of a tensor. '
-                     'The default is TensorFlow behaviour where channels are '
-                     'the last dimension.')
-flags.DEFINE_boolean('output_meta_ckpt', False,
-                     'If set to True, exports the model as .meta, .index, and '
-                     '.data files, with a checkpoint file. These can be later '
-                     'loaded in TensorFlow to continue training.')
+def flags():
+    FLAGS = flags.FLAGS
 
-flags.mark_flag_as_required('input_model')
-flags.mark_flag_as_required('output_model')
+    flags.DEFINE_string('input_model', None, 'Path to the input model.')
+    flags.DEFINE_string('input_model_json', None, 'Path to the input model '
+                                                  'architecture in json format.')
+    flags.DEFINE_string('input_model_yaml', None, 'Path to the input model '
+                                                  'architecture in yaml format.')
+    flags.DEFINE_string('output_model', None, 'Path where the converted model will '
+                                              'be stored.')
+    flags.DEFINE_boolean('save_graph_def', False,
+                         'Whether to save the graphdef.pbtxt file which contains '
+                         'the graph definition in ASCII format.')
+    flags.DEFINE_string('output_nodes_prefix', None,
+                        'If set, the output nodes will be renamed to '
+                        '`output_nodes_prefix`+i, where `i` will numerate the '
+                        'number of of output nodes of the network.')
+    flags.DEFINE_boolean('quantize', False,
+                         'If set, the resultant TensorFlow graph weights will be '
+                         'converted from float into eight-bit equivalents. See '
+                         'documentation here: '
+                         'https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/graph_transforms')
+    flags.DEFINE_boolean('channels_first', False,
+                         'Whether channels are the first dimension of a tensor. '
+                         'The default is TensorFlow behaviour where channels are '
+                         'the last dimension.')
+    flags.DEFINE_boolean('output_meta_ckpt', False,
+                         'If set to True, exports the model as .meta, .index, and '
+                         '.data files, with a checkpoint file. These can be later '
+                         'loaded in TensorFlow to continue training.')
+
+    flags.mark_flag_as_required('input_model')
+    flags.mark_flag_as_required('output_model')
 
 
 def load_model(input_model_path, input_json_path=None, input_yaml_path=None):
