@@ -22,7 +22,7 @@ from keras.models import model_from_json, model_from_yaml
 
 K.set_learning_phase(0)
 FLAGS = flags.FLAGS
-def flags():
+def flags(flag):
 
     flags.DEFINE_string('input_model', None, 'Path to the input model.')
     flags.DEFINE_string('input_model_json', None, 'Path to the input model '
